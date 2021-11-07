@@ -1,0 +1,131 @@
+
+package nsobject;
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class NSObject 
+{
+  double purchaseSharePrice;
+    double currentSharePrice;
+    int numberofShares;
+    String campanyName;
+  
+        
+ public static class StockHolding extends NSObject
+    {
+    double purchaseSharePrice;
+    double currentSharePrice;
+    int numberofShares;
+    String campanyName;
+   
+ public  StockHolding(String cam,double p,double s,int n)
+    {
+    campanyName=cam;   
+      purchaseSharePrice=p;
+        currentSharePrice=s;
+          numberofShares=n;
+    }
+  public String getcampanyName()
+    {
+        return campanyName;
+    }
+ public double getpurchaseSharePrice()
+    {
+        return purchaseSharePrice;
+    }
+ public double getcurrentSharePrice()
+    { 
+        return currentSharePrice;
+    }
+ public double getnumberofShares()
+    {
+        return numberofShares;
+    }
+ public void costInDollars()
+    {   
+        double costIndollars;
+          costIndollars=( numberofShares* purchaseSharePrice);
+            System.out.println("CostInDollars ="+ costIndollars);
+      }
+ public void valueInDollars()
+    {  
+        double valueIndollars;
+          valueIndollars= numberofShares* currentSharePrice;
+            System.out.println("ValueInDollars ="+ valueIndollars);
+    }
+ public String toString()
+     {  
+         System.out.println("CAMPANY NAME"+" "+campanyName) ;
+           System.out.println("PurchaseSharePrice = "+purchaseSharePrice) ;
+             System.out.println("CurrentSharePrice = "+ currentSharePrice);
+               System.out.println("NumberofShares = " +numberofShares);   
+       return "" ;
+     } 
+       }
+ public static class ForeignStockHolding extends NSObject
+      { 
+   // THROUGH CONSTRUCTOR ALSO
+        double conversionRate = 0.94;
+  
+public double costInDollars()
+      {  
+        double costIndollars;
+         costIndollars=( (conversionRate* purchaseSharePrice)+numberofShares);
+          System.out.println("CostInDollars after Rate Conversion ="+ costIndollars);
+            return    costIndollars ;   }
+ public double valueInDollars()
+    {  
+        double valueInDollars;
+         valueInDollars= (numberofShares* (conversionRate*currentSharePrice));
+           System.out.println("ValueInDollars after Rate Conversion ="+ valueInDollars);
+            return  valueInDollars ;
+    } 
+  
+       }
+  
+          public static void main(String[] args) 
+   
+   {
+       
+ StockHolding campany1 = new  StockHolding("HCL",2.3,4.50,40);
+ 
+ StockHolding campany3 = new  StockHolding("WIPRO",12.19,10.56,90);
+   
+ StockHolding campany2 = new  StockHolding("RELIANCE",45.10,49.51,210); 
+  // Array declaration
+     ArrayList< StockHolding> StockHoldings = new ArrayList< StockHolding>();
+      StockHoldings.add(campany1);
+        StockHoldings.add(campany2);
+         StockHoldings.add(campany3);
+         
+      // ASCENDING ORDER OF CAMPANY NAME
+      sort(StockHoldings);
+      SortForeign(StockHoldings);
+      }
+ 
+  public static void sort(  ArrayList< StockHolding> StockHoldings){
+      StockHoldings.sort(Comparator.comparing( StockHolding::getcampanyName));
+       System.out.println("SORTING CAMPANY NAME IN ASCENDING ORDER"); 
+         for(int i=0;i<3;i++)
+       {
+          System.out.println(StockHoldings.get(i));
+        }  
+ }
+    public static void SortForeign(ArrayList< StockHolding> StockHoldings)
+    {  //StockHoldings.clear();
+   
+  StockHolding campany0 = new  StockHolding ("MERCEDES",2.30,4.50,40);        
+         StockHoldings.add(campany0);
+          //REVERSE ORDER OF CAMPANY NAME
+  System.out.println("SORTING CAMPANY NAME IN dSCENDING ORDER"); 
+   Comparator<StockHolding> comparator = Comparator.comparing(company -> company.getcampanyName());
+    StockHoldings.sort(comparator.reversed());
+   for(int i=0;i<4;i++)
+       {
+           System.out.println(StockHoldings.get(i));
+       }   
+ }}      
+ 

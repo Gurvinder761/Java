@@ -1,0 +1,297 @@
+
+package nsobject;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class UserstockHolding {
+       float purchaseSharePrice;
+    float currentSharePrice;
+    int numberofShares;
+    String campanyName;
+    float rateconversion;
+  public UserstockHolding(float v,String k,int n,float a,float c)
+    { 
+        rateconversion=v;
+          campanyName =k;
+            numberofShares=n;
+              currentSharePrice=a; 
+               purchaseSharePrice=c;
+    }
+  public int getnumberofShares()
+       { 
+               return numberofShares;
+        }
+  public String getcampanyname()
+       { 
+               return campanyName;
+       }
+  public float getpurchaseSharePrice()
+      { 
+        return purchaseSharePrice;
+      }
+  public float getcurrentSharePrice()
+     { 
+         return currentSharePrice;
+     }
+    
+  public float costInDollars()
+    {  
+        float costIndollars;
+        costIndollars=( numberofShares*(rateconversion* purchaseSharePrice));
+   // System.out.println("CostInDollars ="+ costIndollars);
+        return costIndollars;
+     }
+  public float valueInDollars()
+    {  
+        float valueIndollars;
+       valueIndollars= ( numberofShares*(rateconversion *currentSharePrice));
+    // System.out.println("ValueInDollars ="+ valueIndollars);
+       return  valueIndollars ;
+    }
+  public String toString()
+     {   
+         System.out.println("CAMPANY NAME ="+ campanyName) ;
+             System.out.println("PurchaseSharePrice = "+purchaseSharePrice) ;
+               System.out.println("CurrentSharePrice = "+ currentSharePrice);
+                 System.out.println("NumberofShares = " +numberofShares);   
+                   return campanyName;
+          }
+ 
+  
+  public static void main(String[] args)
+        
+        {
+               
+      Scanner keyboard = new Scanner(System.in);
+       
+  System.out.println("MAXIMUM VALUE TO ENTER IS 8." +'\n'+"How many stocks you want to enter "); 
+    int  num=keyboard.nextInt();
+       if(num>8)
+         {
+             do{
+             System.out.println(" Wrong value! PLEASE ENTER BELOW 8");
+                num=keyboard.nextInt();
+             } while(num>8); 
+        }
+       
+       UserstockHolding[] UserStock = new UserstockHolding[num];
+     // METHODS CALL
+         ENTERUSERSTOCK(num,UserStock); 
+           displaylist(UserStock);
+        }
+
+ public static void ENTERUSERSTOCK(int num , UserstockHolding[] UserStock) 
+  
+     {
+        Scanner keyboard = new Scanner(System.in);
+          float purchaseSharePrice;
+            float currentSharePrice;
+              int numberofShares;
+                String campanyName;
+                  float rateconversion;
+       
+     for (int i =1;i<num+1;i++)
+  {
+   System.out.println("******* ENTER THE TYPES OF STOCKS******") ;
+   System.out.println(" ENTER 1 FOR COMMON STOCKS AND ENTER 2 FOR FOR FOREIGN STOCKS") ;
+         int type=keyboard.nextInt();   
+     System.out.println(" ENTER THE CAMPANY NAME") ;
+            campanyName=keyboard.next();  
+        System.out.println(" ENTER THE VALUE OF PurchaseSHAREPRICE ") ;
+               purchaseSharePrice = keyboard.nextFloat();
+           System.out.println(" ENTER THE VALUE OF CurrentSHAREPRICE = ");
+                   currentSharePrice=keyboard.nextFloat();
+              System.out.println(" ENTER THE VALUE OF NumberofSHARES = ");
+                      numberofShares =keyboard.nextInt();
+    if(type==2)
+    {
+       rateconversion=1;
+    } 
+    else 
+    {
+      System.out.println(" ENTER THE VALUE OF RATECONVERSION = ");
+       rateconversion=keyboard.nextFloat();
+    }
+   UserStock[i-1]= new UserstockHolding(rateconversion,campanyName,numberofShares,purchaseSharePrice,currentSharePrice) ;
+    }
+     
+    }
+ public static void display(UserstockHolding[] UserStock,int UserStockindex)
+
+       {      
+       System.out.println("...(1)..CAMPANY NAME_="+UserStock[UserStockindex].getcampanyname() );
+         System.out.println("...(2)..PURCHASESHAREPRICE = " +UserStock[UserStockindex].getpurchaseSharePrice() ); 
+           System.out.println("...(3)..CURRENTSHARESPRICE =" +UserStock[UserStockindex].getcurrentSharePrice() );
+             System.out.println("...(4)..NUMBEROFSHARES = " +UserStock[UserStockindex].getnumberofShares() );   
+        
+         }
+        
+   public static void displaylist(UserstockHolding[] UserStock) 
+         {
+    int choce;        Scanner keyboard = new Scanner(System.in);
+ do
+{
+            int size=UserStock.length;
+   System.out.println("(1) ENTER 1 to display stocks with lowest value ");
+    System.out.println("(2) ENTER 2 to display stocks with highest value = ");
+      System.out.println("(3) ENTER 3 to display most profitable stock = ");  
+        System.out.println("(4) ENTER 4 to display least profitable stock");
+          System.out.println("(5) ENTER 5 to display all stock with sorted campony name(A-Z");
+            System.out.println("(6) ENTER 6 to display  all stocks sorted frpm highest to lowest value");
+             System.out.println("(7) ENTER 7 to exit ");
+     
+    int choice=keyboard.nextInt();
+chose=choice;
+         UserstockHolding obj = null;
+    int z=UserStock.length;
+         switch(choice)
+         {           
+           case 1:
+                   display( UserStock,lowvalue(UserStock) );
+                   break;
+           case 2:
+                     display( UserStock,highvalue(UserStock) );
+                     break;
+           case 3:
+                     display( UserStock,mostprofitvalue(UserStock) );
+                     break;
+           case 4:
+                     display( UserStock,leastprofitvalue(UserStock) );
+                     break;
+            case 5:    
+                   sortcam(UserStock);
+                   {
+                  for(int i=0;i<UserStock.length;i++)
+                  display(UserStock,i );
+                   }
+                  break;
+            case 6: 
+                sortval( UserStock);
+                {
+                  for(int i=0;i<UserStock.length;i++)
+                  display(UserStock,i );
+                }
+                  break;
+                   
+            //   case 7:
+                
+         }  } while(chose<7) 
+         }
+ 
+ public static int lowvalue( UserstockHolding[] UserStock)
+    { 
+        int minindex=0;
+        int z=UserStock.length;
+        for(int a=1;a<z;a++)
+      
+    if(UserStock[a].valueInDollars() < UserStock[minindex].valueInDollars())
+      {
+        UserStock[minindex]=UserStock[a];
+       }
+              System.out.println(" STOCK WITH LEAST VALUE  IS "+'\n');
+               return minindex;
+      }
+  public static int highvalue( UserstockHolding[] UserStock)
+          {
+              int maxindex=0;
+              int z=UserStock.length;
+              for(int c=1;c<z;c++)
+         {
+  if(UserStock[c].valueInDollars() > UserStock[maxindex].valueInDollars())
+    
+        UserStock[maxindex]=UserStock[c];}
+          System.out.println("****STOCK WITH highest VALUE  IS****"+'\n');
+            return maxindex;
+              }
+                                  
+   public static int mostprofitvalue( UserstockHolding[] UserStock)
+          {  
+              int maxindex=0;
+               int z=UserStock.length;
+        for(int b=1;b<z;b++)
+        { 
+         if((UserStock[b].getcurrentSharePrice()-UserStock[b].getpurchaseSharePrice())  <(UserStock[maxindex].getcurrentSharePrice()-UserStock[maxindex].getpurchaseSharePrice()))
+         {
+          UserStock[maxindex]=UserStock[b];
+         }
+        }
+          System.out.println("****STOCK WITH MOST PROFIT VALUE  IS ****"+'\n');
+          return maxindex; 
+     }
+          
+        
+         
+        
+ public static int leastprofitvalue( UserstockHolding[] UserStock)
+     {
+          int minindex=0;
+          int z=UserStock.length;
+           
+           for(int b=1;b<z;b++)
+     {
+    
+         if((UserStock[b].getcurrentSharePrice()-UserStock[b].getpurchaseSharePrice()) > (UserStock[minindex].getcurrentSharePrice()-UserStock[minindex].getpurchaseSharePrice()))
+    {
+        minindex=b;
+        } }      
+           
+           System.out.println("****STOCK WITH LEAST PROFIT VALUE****"+'\n');
+   return minindex; 
+     }  
+      
+        
+   public static void sortcam(UserstockHolding[] UserStock)       
+     {
+      UserstockHolding temp;
+      int z=UserStock.length;
+     
+       for(int b=0;b<z;b++)
+     {   for(int c=0;c<z;c++)
+      {
+    String s1 =UserStock[c].getcampanyname();
+      String str1 = s1.toLowerCase();
+        String s2 =UserStock[c+1].getcampanyname();
+         String str2=s1.toLowerCase();
+     char c1=s1.charAt(0);
+     char c2=s1.charAt(0);
+ if( c1>c2); 
+    {
+        
+        temp=UserStock[c];
+        UserStock[c]=UserStock[c+1];
+        UserStock[c+1]=temp;
+   }    
+     }
+       } 
+        }
+     
+  public static void sortval( UserstockHolding[] UserStock)        
+     {
+        UserstockHolding obj;
+         int z=UserStock.length;
+          for(int b=0;b<z;b++)
+       {
+           for(int c=0;c+1<z;c++)
+      {
+           if(UserStock[c].valueInDollars()<UserStock[c+1].valueInDollars())
+      {
+            obj=UserStock[c];
+            UserStock[c]=UserStock[c+1];
+            UserStock[c+1]=obj;
+      }
+        }  
+         } 
+        System.out.println("****STOCK WITH ASCENDING ORDER IN TERMS OF THEIR CORRESPONDING VALUE****"+'\n');
+          }
+           }
+            
+}
+  
+         
+     
+     
+     
+     
+   
